@@ -2,3 +2,6 @@ Flask
 transformers
 Pillow
 pytest
+torch
+torchvision
+torchaudio

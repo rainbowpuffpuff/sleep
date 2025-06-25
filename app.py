@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, render_template, redirect, url_for, flash
 from werkzeug.utils import secure_filename
-from .utils import extract_exif_datetime, classify_image
+from utils import extract_exif_datetime, classify_image  # Fixed: use absolute import
 from datetime import datetime
 
 UPLOAD_FOLDER = 'uploads'
@@ -70,13 +70,14 @@ def upload_file():
             print(f"Detected: {label} (confidence: {score:.2f})")
             # Dashboard logic
             if not photo_time and (label == 'bed' or label == 'couch'):
-                custom_message = "🛏️ I see you have a bed, but I can't tell when you went to sleep! 🕵️‍♂️🔍"
+                custom_message = "\U0001F6CF\uFE0F I see you have a bed, but I can't tell when you went to sleep! \U0001F575\uFE0F\U0001F50D"
             elif not photo_time:
-                custom_message = "🕵️‍♂️🔍 I can't really know when you went to sleep. Try another photo!"
+                custom_message = "\U0001F575\uFE0F\U0001F50D I can't really know when you went to sleep. Try another photo!"
             elif label != 'bed' and label != 'couch':
-                custom_message = "🤔 Hmm... are you sure that's a bed or couch?"
+                custom_message = "\U0001F914 Hmm... are you sure that's a bed or couch?"
             elif photo_time.hour < BEDTIME_HOUR:
-                custom_message = "🌟 Sleep champion! You went to bed early!"
+                custom_message = "\U0001F31F Sleep champion! You went to bed early!"
+                print("i love you albina")  # Secret message in console
             else:
                 custom_message = f"Photo taken at {photo_time.strftime('%H:%M')}, try to sleep earlier!"
             # Points and bar

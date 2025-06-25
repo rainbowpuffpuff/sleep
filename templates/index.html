@@ -102,11 +102,12 @@
     <div class="upload-container">
       <h1>Sleep Early Dashboard</h1>
       <div class="desc">Upload a photo of your bed or couch before 10pm to earn points and see your sleep impact!</div>
-      {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <div class="msg">
+          <div class="msg" id="msg-box">
           {% for message in messages %}
-            {{ message }}<br>
+            {{ message[1] }}<br>
+            <script>console.log({{ message[1]|tojson }});</script>
           {% endfor %}
           </div>
         {% endif %}
@@ -131,7 +132,7 @@
           reader.onload = function(e) {
             preview.src = e.target.result;
             preview.style.display = 'block';
-            label.textContent = 'Upload';
+            label.textContent = 'Choose Image'; // Always show 'Choose Image'
             btn.textContent = 'Upload';
           }
           reader.readAsDataURL(file);
